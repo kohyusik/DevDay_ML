@@ -51,9 +51,9 @@ sess = tf.Session()
 sess.run(init)
 
 # Fit the line.
-for step in xrange(2001):
+for step in xrange(20001):
     sess.run(train, feed_dict={X: x_data, Y: y_data})
-    if step % 200 == 0:
+    if step % 100 == 0:
         print step, sess.run(cost, feed_dict={X:x_data, Y: y_data}), sess.run(W)
 # W = [[-0.98341316  0.35061496 -0.81121802  0.32535654 -0.88001603]]
 # W = [[ 0.82699066 -0.04147232 -0.02248367 -0.07687526 -0.02953624]]
