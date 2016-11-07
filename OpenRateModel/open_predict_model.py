@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+# kohyusik
 xy = np.loadtxt('target.txt', unpack=True, dtype='float32', delimiter=',')
 x_data = np.transpose(xy[0:-1]) # 117600
 y_data = xy[-1]
