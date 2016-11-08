@@ -51,16 +51,16 @@ L7 = tf.nn.relu(tf.matmul(L6, w6) + b6)
 L8 = tf.nn.relu(tf.matmul(L7, w7) + b7)
 
 # hypothesis
-#hypothesis = tf.sigmoid(tf.matmul(L8, w8) + b8)
-h = tf.matmul(L8, w8) + b8
-hypothesis = tf.div(1., 1.+tf.exp(-h))
+hypothesis = tf.sigmoid(tf.matmul(L8, w8) + b8)
+#h = tf.matmul(L8, w8) + b8
+#hypothesis = tf.div(1., 1.+tf.exp(-h))
 
 # cost function
 with tf.name_scope('cost') as scope:
     cost = -tf.reduce_mean(Y * tf.log(hypothesis) + (1 - Y) * tf.log(1 - hypothesis))
 
 with tf.name_scope('train') as scope:
-    a = tf.Variable(0.01)
+    a = tf.Variable(0.1)
     optimizer = tf.train.GradientDescentOptimizer(a)
     train = optimizer.minimize(cost)
 
@@ -69,9 +69,9 @@ init = tf.initialize_all_variables()
 with tf.Session() as sess:
     sess.run(init)
 
-    for step in xrange(20000):
+    for step in xrange(5000):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
-        if step % 200 == 0:
+        if step % 50 == 0:
             print step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run(w1), sess.run(w2)
 
     correct_prediction = tf.equal(tf.floor(hypothesis + 0.5), Y)
@@ -79,3 +79,25 @@ with tf.Session() as sess:
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
     print sess.run([hypothesis, tf.floor(hypothesis + 0.5), correct_prediction], feed_dict={X: x_data, Y: y_data})
     print "accuracy", accuracy.eval({X: x_data, Y: y_data})
+
+    print "TEST INPUT : \n"
+    print sess.run(hypothesis, feed_dict={X: [[12, 13, 50/2, 0*25]]}) > 0.5
+    print sess.run(hypothesis, feed_dict={X: [[20, 10, 25, 0]]}) > 0.5
+    # print sess.run(hypothesis, feed_dict={X:[[20., 15., 5., 1.], [20., 15., 5., 1.]] })  # > 0.5
+    # print sess.run(hypothesis, feed_dict={X:[[20, 15, 5, 1]] })[0][0]  # > 0.5
+
+    #input
+    while 1 :
+        ages = int(raw_input("Enter ages(10 ~ 50) ? \n")) / 2.
+        gender = int(raw_input("Enter gender(0 , 1) ? \n")) * 25.
+
+        print '######## RESULT ########'
+        for day in xrange(7) :
+            print '###', days[day], 'open rate ###'
+            day = day * 4
+            for time in xrange(24) :
+                result = sess.run(hypothesis, feed_dict={X:[[day, time, ages, gender]]})[0][0]
+                print '-',time,'\t:',round(result,4) > 0.5
+
+
+
