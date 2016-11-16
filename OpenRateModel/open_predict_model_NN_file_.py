@@ -69,7 +69,7 @@ init = tf.initialize_all_variables()
 with tf.Session() as sess:
     sess.run(init)
 
-    for step in xrange(10):
+    for step in xrange(5001):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
         if step % 200 == 0:
             print step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run(w1), sess.run(w2)
@@ -96,12 +96,12 @@ with tf.Session() as sess:
         for w_time in xrange(24):
             time = w_time
             for w_ages in xrange(8):
-                ages = w_ages * 10
+                ages = (w_ages + 1) * 5
                 for w_gender in xrange(1):
                     gender = w_gender * 25.
-                    w_result = sess.run(hypothesis, feed_dict={X: [[day, time, w_ages, gender]]})[0][0]
+                    w_result = sess.run(hypothesis, feed_dict={X: [[day, time, ages, gender]]})[0][0]
 
-                    f.write(str(w_day) + "," + str(w_time) + "," + str(w_ages) + "," + str(w_gender) + "," + str(round(w_result, 4) * 100))
+                    f.write(str(w_day) + "," + str(w_time) + "," + str(ages * 2) + "," + str(w_gender) + "," + str(round(w_result, 4) * 100))
                     f.write("\n")
 
     f.close()
