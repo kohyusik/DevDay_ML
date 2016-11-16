@@ -69,7 +69,7 @@ init = tf.initialize_all_variables()
 with tf.Session() as sess:
     sess.run(init)
 
-    for step in xrange(20001):
+    for step in xrange(10):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
         if step % 200 == 0:
             print step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run(w1), sess.run(w2)
@@ -90,7 +90,7 @@ with tf.Session() as sess:
 
 
     # file write
-    f = open("test.work", "w")
+    f = open('test.csv', 'w')
     for w_day in xrange(7):
         day = w_day * 4
         for w_time in xrange(24):
@@ -101,7 +101,7 @@ with tf.Session() as sess:
                     gender = w_gender * 25.
                     w_result = sess.run(hypothesis, feed_dict={X: [[day, time, w_ages, gender]]})[0][0]
 
-                    f.write(str(w_day) + "\t" + str(w_time) + "\t" + str(w_ages) + "\t" + str(w_gender) + "\t" + str(w_result))
+                    f.write(str(w_day) + "," + str(w_time) + "," + str(w_ages) + "," + str(w_gender) + "," + str(round(w_result, 4) * 100))
                     f.write("\n")
 
     f.close()

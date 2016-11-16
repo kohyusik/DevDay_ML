@@ -69,9 +69,9 @@ init = tf.initialize_all_variables()
 with tf.Session() as sess:
     sess.run(init)
 
-    for step in xrange(5000):
+    for step in xrange(20001):
         sess.run(train, feed_dict={X: x_data, Y: y_data})
-        if step % 50 == 0:
+        if step % 200 == 0:
             print step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run(w1), sess.run(w2)
 
     correct_prediction = tf.equal(tf.floor(hypothesis + 0.5), Y)
@@ -97,7 +97,7 @@ with tf.Session() as sess:
             day = day * 4
             for time in xrange(24) :
                 result = sess.run(hypothesis, feed_dict={X:[[day, time, ages, gender]]})[0][0]
-                print '-',time,'\t:',round(result,4) > 0.5
+                print '-',time,'\t:',round(result,4)
 
 
 
