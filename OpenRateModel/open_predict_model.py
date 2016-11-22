@@ -52,7 +52,7 @@ sess = tf.Session()
 sess.run(init)
 
 # Fit the line.
-for step in xrange(20001):
+for step in xrange(21):
     sess.run(train, feed_dict={X: x_data, Y: y_data})
     if step % 100 == 0:
         print step, sess.run(cost, feed_dict={X:x_data, Y: y_data}), sess.run(W)
