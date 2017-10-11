@@ -4,7 +4,7 @@ import numpy as np
 xy = np.loadtxt('target.txt', unpack=True, dtype='float32', delimiter=',')
 x_data = np.transpose(xy[0:-1]) # 117600
 y_data = xy[-1]
-days = ['mon','tue','wed','ths','fri','sat','sun']
+days = ['mon', 'tue', 'wed', 'ths', 'fri', 'sat', 'sun']
 print days[0]
 
 

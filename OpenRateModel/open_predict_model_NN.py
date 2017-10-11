@@ -42,13 +42,20 @@ b6 = tf.Variable(tf.zeros([10]), name="Bias6")
 b7 = tf.Variable(tf.zeros([10]), name="Bias7")
 b8 = tf.Variable(tf.zeros([1]), name="Bias8")
 
-L2 = tf.nn.relu(tf.matmul(X, w1) + b1)
-L3 = tf.nn.relu(tf.matmul(L2, w2) + b2)
-L4 = tf.nn.relu(tf.matmul(L3, w3) + b3)
-L5 = tf.nn.relu(tf.matmul(L4, w4) + b4)
-L6 = tf.nn.relu(tf.matmul(L5, w5) + b5)
-L7 = tf.nn.relu(tf.matmul(L6, w6) + b6)
-L8 = tf.nn.relu(tf.matmul(L7, w7) + b7)
+with tf.name_scope("layer_1") as scope:
+    L2 = tf.nn.relu(tf.matmul(X, w1) + b1)
+with tf.name_scope("layer_2") as scope:
+    L3 = tf.nn.relu(tf.matmul(L2, w2) + b2)
+with tf.name_scope("layer_3") as scope:
+    L4 = tf.nn.relu(tf.matmul(L3, w3) + b3)
+with tf.name_scope("layer_4") as scope:
+    L5 = tf.nn.relu(tf.matmul(L4, w4) + b4)
+with tf.name_scope("layer_5") as scope:
+    L6 = tf.nn.relu(tf.matmul(L5, w5) + b5)
+with tf.name_scope("layer_6") as scope:
+    L7 = tf.nn.relu(tf.matmul(L6, w6) + b6)
+with tf.name_scope("layer_7") as scope:
+    L8 = tf.nn.relu(tf.matmul(L7, w7) + b7)
 
 # hypothesis
 hypothesis = tf.sigmoid(tf.matmul(L8, w8) + b8)
